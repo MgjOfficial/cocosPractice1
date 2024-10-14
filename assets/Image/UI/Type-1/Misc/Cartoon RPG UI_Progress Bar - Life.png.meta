@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "b748fd27-9ad8-4acc-87e2-268f5612da75",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "b748fd27-9ad8-4acc-87e2-268f5612da75@6c48a",
+      "displayName": "Cartoon RPG UI_Progress Bar - Life",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "b748fd27-9ad8-4acc-87e2-268f5612da75",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "b748fd27-9ad8-4acc-87e2-268f5612da75@f9941",
+      "displayName": "Cartoon RPG UI_Progress Bar - Life",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0.5,
+        "offsetY": 8,
+        "trimX": 16,
+        "trimY": 0,
+        "width": 369,
+        "height": 84,
+        "rawWidth": 400,
+        "rawHeight": 100,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -184.5,
+            -42,
+            0,
+            184.5,
+            -42,
+            0,
+            -184.5,
+            42,
+            0,
+            184.5,
+            42,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            16,
+            100,
+            385,
+            100,
+            16,
+            16,
+            385,
+            16
+          ],
+          "nuv": [
+            0.04,
+            0.16,
+            0.9625,
+            0.16,
+            0.04,
+            1,
+            0.9625,
+            1
+          ],
+          "minPos": [
+            -184.5,
+            -42,
+            0
+          ],
+          "maxPos": [
+            184.5,
+            42,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "b748fd27-9ad8-4acc-87e2-268f5612da75@6c48a",
+        "atlasUuid": ""
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "hasAlpha": true,
+    "fixAlphaTransparencyArtifacts": false,
+    "redirect": "b748fd27-9ad8-4acc-87e2-268f5612da75@6c48a"
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "b960bf8e-120c-4191-88a3-1b2a22c2ac15",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "b960bf8e-120c-4191-88a3-1b2a22c2ac15@6c48a",
+      "displayName": "Cartoon RPG UI_Game Icon - Iron Treasure Box",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "b960bf8e-120c-4191-88a3-1b2a22c2ac15",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "b960bf8e-120c-4191-88a3-1b2a22c2ac15@f9941",
+      "displayName": "Cartoon RPG UI_Game Icon - Iron Treasure Box",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -1.5,
+        "offsetY": 3,
+        "trimX": 5,
+        "trimY": 12,
+        "width": 147,
+        "height": 130,
+        "rawWidth": 160,
+        "rawHeight": 160,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -73.5,
+            -65,
+            0,
+            73.5,
+            -65,
+            0,
+            -73.5,
+            65,
+            0,
+            73.5,
+            65,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            5,
+            148,
+            152,
+            148,
+            5,
+            18,
+            152,
+            18
+          ],
+          "nuv": [
+            0.03125,
+            0.1125,
+            0.95,
+            0.1125,
+            0.03125,
+            0.925,
+            0.95,
+            0.925
+          ],
+          "minPos": [
+            -73.5,
+            -65,
+            0
+          ],
+          "maxPos": [
+            73.5,
+            65,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "b960bf8e-120c-4191-88a3-1b2a22c2ac15@6c48a",
+        "atlasUuid": ""
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "hasAlpha": true,
+    "fixAlphaTransparencyArtifacts": false,
+    "redirect": "b960bf8e-120c-4191-88a3-1b2a22c2ac15@6c48a"
+  }
+}

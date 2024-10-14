@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "02720d55-6989-407f-8672-82d06fe0b2fd",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "02720d55-6989-407f-8672-82d06fe0b2fd@6c48a",
+      "displayName": "Cartoon RPG UI_Window - Tall",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "02720d55-6989-407f-8672-82d06fe0b2fd",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "02720d55-6989-407f-8672-82d06fe0b2fd@f9941",
+      "displayName": "Cartoon RPG UI_Window - Tall",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -0.5,
+        "offsetY": 0,
+        "trimX": 23,
+        "trimY": 27,
+        "width": 673,
+        "height": 816,
+        "rawWidth": 720,
+        "rawHeight": 870,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -336.5,
+            -408,
+            0,
+            336.5,
+            -408,
+            0,
+            -336.5,
+            408,
+            0,
+            336.5,
+            408,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            23,
+            843,
+            696,
+            843,
+            23,
+            27,
+            696,
+            27
+          ],
+          "nuv": [
+            0.03194444444444444,
+            0.03103448275862069,
+            0.9666666666666667,
+            0.03103448275862069,
+            0.03194444444444444,
+            0.9689655172413794,
+            0.9666666666666667,
+            0.9689655172413794
+          ],
+          "minPos": [
+            -336.5,
+            -408,
+            0
+          ],
+          "maxPos": [
+            336.5,
+            408,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "02720d55-6989-407f-8672-82d06fe0b2fd@6c48a",
+        "atlasUuid": ""
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "hasAlpha": true,
+    "fixAlphaTransparencyArtifacts": false,
+    "redirect": "02720d55-6989-407f-8672-82d06fe0b2fd@6c48a"
+  }
+}

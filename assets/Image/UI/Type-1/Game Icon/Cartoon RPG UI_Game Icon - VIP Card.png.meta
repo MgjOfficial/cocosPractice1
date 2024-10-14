@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "9bd1de20-c00e-47e4-8fd7-195ea324d6ea",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "9bd1de20-c00e-47e4-8fd7-195ea324d6ea@6c48a",
+      "displayName": "Cartoon RPG UI_Game Icon - VIP Card",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "9bd1de20-c00e-47e4-8fd7-195ea324d6ea",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "9bd1de20-c00e-47e4-8fd7-195ea324d6ea@f9941",
+      "displayName": "Cartoon RPG UI_Game Icon - VIP Card",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": 0,
+        "trimX": 3,
+        "trimY": 9,
+        "width": 154,
+        "height": 142,
+        "rawWidth": 160,
+        "rawHeight": 160,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -77,
+            -71,
+            0,
+            77,
+            -71,
+            0,
+            -77,
+            71,
+            0,
+            77,
+            71,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            3,
+            151,
+            157,
+            151,
+            3,
+            9,
+            157,
+            9
+          ],
+          "nuv": [
+            0.01875,
+            0.05625,
+            0.98125,
+            0.05625,
+            0.01875,
+            0.94375,
+            0.98125,
+            0.94375
+          ],
+          "minPos": [
+            -77,
+            -71,
+            0
+          ],
+          "maxPos": [
+            77,
+            71,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "9bd1de20-c00e-47e4-8fd7-195ea324d6ea@6c48a",
+        "atlasUuid": ""
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "hasAlpha": true,
+    "fixAlphaTransparencyArtifacts": false,
+    "redirect": "9bd1de20-c00e-47e4-8fd7-195ea324d6ea@6c48a"
+  }
+}

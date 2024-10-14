@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.27",
+  "importer": "image",
+  "imported": true,
+  "uuid": "440cc82c-3752-4a60-a474-69d1d5bceeaf",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "440cc82c-3752-4a60-a474-69d1d5bceeaf@6c48a",
+      "displayName": "Cartoon RPG UI_Game Icon - Leaf",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "imageUuidOrDatabaseUri": "440cc82c-3752-4a60-a474-69d1d5bceeaf",
+        "isUuid": true,
+        "visible": false,
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "440cc82c-3752-4a60-a474-69d1d5bceeaf@f9941",
+      "displayName": "Cartoon RPG UI_Game Icon - Leaf",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": 0,
+        "offsetY": 0,
+        "trimX": 15,
+        "trimY": 7,
+        "width": 130,
+        "height": 146,
+        "rawWidth": 160,
+        "rawHeight": 160,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -65,
+            -73,
+            0,
+            65,
+            -73,
+            0,
+            -65,
+            73,
+            0,
+            65,
+            73,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            15,
+            153,
+            145,
+            153,
+            15,
+            7,
+            145,
+            7
+          ],
+          "nuv": [
+            0.09375,
+            0.04375,
+            0.90625,
+            0.04375,
+            0.09375,
+            0.95625,
+            0.90625,
+            0.95625
+          ],
+          "minPos": [
+            -65,
+            -73,
+            0
+          ],
+          "maxPos": [
+            65,
+            73,
+            0
+          ]
+        },
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "440cc82c-3752-4a60-a474-69d1d5bceeaf@6c48a",
+        "atlasUuid": ""
+      },
+      "ver": "1.0.12",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "hasAlpha": true,
+    "fixAlphaTransparencyArtifacts": false,
+    "redirect": "440cc82c-3752-4a60-a474-69d1d5bceeaf@6c48a"
+  }
+}
