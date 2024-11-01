@@ -29,12 +29,11 @@ export class UIManager extends Singleton<UIManager> {
         console.log("open ui : " + name);
 
         if(this.uiMap.has(name)){
-            //console.log("has ui");
             this.uiMap.get(name).node.active = true;
         }
         else{
             let path = `ui/${name}`;
-            console.log(path);
+            // console.log(path);
             resources.load(path, Prefab, (err, uiPrefab)=>{
                 if(err){
                     console.error("Failed to load UI Prefab: " + name);

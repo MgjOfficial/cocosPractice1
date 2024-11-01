@@ -1,10 +1,11 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, EventTouch, Node } from 'cc';
 import { MPlayer } from '../MPlayer';
 const { ccclass, property } = _decorator;
 
 @ccclass('WeaponBase')
-export abstract class WeaponBase extends Component {
+export class WeaponBase extends Component {
 
+    protected owner : Node;
     //武器参数
     protected weaponName : string;
     protected attack : number;      //攻击力    
@@ -15,7 +16,11 @@ export abstract class WeaponBase extends Component {
     //辅助数据
     protected lastAtkTimestamp : number;
 
-    public init(name:string, attack : number, cooldown :number, range : number, scale: number ) : void {
+    public setOwner(owner : Node){
+        this.owner = owner;
+    }
+
+    public init(name : string, attack : number, cooldown :number, range : number, scale: number ) : void {
 
         this.attack = attack;
         this.cooldown = cooldown;
@@ -29,9 +34,12 @@ export abstract class WeaponBase extends Component {
     //待继承方法
 
     //执行武器的攻击行为(normal attack)
-    abstract fire(owner : MPlayer):void;
+    fire(owner : MPlayer):void{};
 
-    public abstract output() : void;
+
+    // output(){
+    //     console.log("weapon base output");
+    // }
 
     //公共方法
 
@@ -43,7 +51,19 @@ export abstract class WeaponBase extends Component {
         return !(difInSeconds > this.cooldown);
     }
     
+    //UI方法
+    onTouchStart(e : EventTouch){
+        console.log("weapon base on touch start");
+    }
+    onTouchMove(e : EventTouch){
 
+    }
+    onTouchEnd(e : EventTouch){
+        console.log("weapon base on touch end");
+    }
+    onTouchCancel(e : EventTouch){
+        console.log("weapon base on touch cancel");
+    }
 }
 
 

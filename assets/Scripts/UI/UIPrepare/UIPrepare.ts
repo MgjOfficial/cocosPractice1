@@ -36,10 +36,6 @@ export class UIPrepare extends UIBase {
         super.onHidden();
     }
 
-    public init(): void {
-        super.init();
-    }
-
     public enterGame(mapIdx : number){
         let charId = this.buildSelect.getSelectedChar();
         if(charId === -1){return;}
@@ -47,7 +43,7 @@ export class UIPrepare extends UIBase {
         //console.log(`select map ${mapIdx}`);
 
         //默认武器1测试
-        GameManager.instance().initPlayerInfo(charId, 1);
+        GameManager.instance().initPlayerInfo(charId);
 
         director.loadScene("GameScene");
     }

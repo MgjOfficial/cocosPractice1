@@ -6,14 +6,24 @@ const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
 export class GameManager extends Singleton<GameManager>{
-    playerInfo : MPlayer;
+    public player : MPlayer;
+
 
 
     //初始化玩家数据
-    initPlayerInfo(characterID: number, weaponID:number){
-        let player = DataManager.instance().getCharacterInfo(characterID);
+    initPlayerInfo(characterID: number){
+        let chararcterName = "";
+        if(characterID === 1){
+            chararcterName = "momoi";
+        }
+        else if(characterID === 2){
+            chararcterName = "midori";
+        }
 
-        this.playerInfo = player;
+        DataManager.instance().createNewPlayer(chararcterName, (mp : MPlayer)=>{
+            this.player = mp;
+        })
+        
     }
 }
 

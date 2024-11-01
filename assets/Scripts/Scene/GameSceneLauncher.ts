@@ -1,5 +1,8 @@
-import { _decorator, Component, director, instantiate, Node, Prefab, resources } from 'cc';
+import { _decorator, Component, director, game, instantiate, Node, Prefab, resources, Scheduler } from 'cc';
 import { GameManager } from '../Manager/GameManager';
+import { UIManager } from '../Manager/UIManager';
+import { UIPlayerControl } from '../UI/UIPlayerControl/UIPlayerControl';
+import { WeaponBase } from '../Model/Weapon/WeaponBase';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameSceneLauncher')
@@ -15,17 +18,51 @@ export class GameSceneLauncher extends Component {
         3.加载操控UI界面
         etc..
         */
-
+        let mplayer = GameManager.instance().player;
+        if(!mplayer){
+            console.error("player data is not existed");
+        }
 
         // loading character
-        resources.load(`character/${GameManager.instance().playerInfo.name}`, Prefab, (err, pfb)=>{
+        resources.load(`character/${mplayer.name}`, Prefab, (err, pfb)=>{
             if(err){
-                console.error("Failed to load character Prefab: " + name);
+                console.error(err.message);
                 return null;
             }
-            let node = instantiate(pfb);
-            node.setParent(director.getScene().getChildByName("Canvas"));
+            let chaNode = instantiate(pfb);
+            chaNode.setParent(director.getScene().getChildByName("Canvas").getChildByName("GameRoot"));
+            mplayer.node = chaNode;
+            //console.log("start to load weapon");
+
+            mplayer.weapons_name.forEach(wep => {
+                resources.load(`weapon/${wep}`, Prefab, (err, pfb)=>{
+                    if(err){
+                        console.error(err.message);
+                        return null;
+                    }
+                    let wepNode = instantiate(pfb);
+                    wepNode.setParent(chaNode);
+                    wepNode.active = true;
+                    console.log(`load weapon [${wep}] complete`);
+
+                    const wc = wepNode.getComponent(WeaponBase);
+
+                    mplayer.addWeapon_component(wc);
+                    wc.setOwner(chaNode);
+                })
+
+                
+            });
+            this.scheduleOnce(UIManager.instance().openUI("UIPlayerControl",(ui : UIPlayerControl) =>{
+                ui.node.setParent(this.node.parent.getChildByName("Canvas").getChildByName("UIRoot"));
+                ui.init();
+            }), 1);
+
+            
+    
         });
+
+        
     }
 }
 

@@ -1,0 +1,6 @@
+{
+    "_name" : "momoi",
+    "maxHp" : 550,
+    "maxMp" : 300,
+    "weapons" : [1]
+}

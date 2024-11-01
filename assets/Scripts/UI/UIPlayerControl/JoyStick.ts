@@ -14,8 +14,7 @@ export class JoyStick extends Component {
     
     playerController : PlayerController;
 
-
-    start() {
+    public init() : void {
         //获取方向和圆球节点
         this.dish = this.node.getChildByName("Dish");
         this.pole = this.node.getChildByName("Pole");
@@ -26,6 +25,13 @@ export class JoyStick extends Component {
         this.node.on(Node.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
 
         this.bindController();
+    }
+
+    protected onDestroy(): void {
+        this.node.off(Node.EventType.TOUCH_START, this.onTouchStart, this);
+        this.node.off(Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        this.node.off(Node.EventType.TOUCH_END, this.onTouchEnd, this);
+        this.node.off(Node.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
     }
 
     //绑定玩家控制器(可能在其他重置的情况下需要再次调用)
@@ -64,16 +70,19 @@ export class JoyStick extends Component {
         this.pole.setPosition(pos_nodeSpace);
 
 
-        this.playerController.move(pos_nodeSpace.normalize(),1);
+        this.playerController.setMove(pos_nodeSpace.normalize(),1);
     }
 
     onTouchEnd(e:EventTouch) {
+        console.log("touch end");
         this.pole.setPosition(new Vec3(0,0,0));
         this.playerController.stopMove();
     }
 
     onTouchCancel(e:EventTouch) {
+        console.log("touch cancle");
         this.pole.setPosition(new Vec3(0,0,0));
+        this.playerController.stopMove();
     }
 
 

@@ -1,4 +1,4 @@
-import { _decorator, Component, director, instantiate, Node, Prefab, resources } from 'cc';
+import { _decorator, Component, director, error, instantiate, JsonAsset, Node, Prefab, resources } from 'cc';
 import Singleton from '../Common/Singleton';
 import { MPlayer } from '../Model/MPlayer';
 import { WeaponTest } from '../Model/Weapon/WeaponTest';
@@ -7,38 +7,71 @@ const { ccclass, property } = _decorator;
 @ccclass('DataManager')
 export class DataManager extends Singleton<DataManager> {
 
+    public weapons : Map<number,string> = new Map<number, string>();
     //整合从resoureces内加载内容的方法
 
+    public init(){
+        this.getDefine("weapons", (res: JsonAsset)=>{
+            let data = res.json!;
+            for(const key in data){
+                const value = data[key];
+                this.weapons.set(value, key);
+            }
+        })
+    }
+
     //目前只在代码中直接new player
-    getCharacterInfo(id : number): MPlayer{
-        let newPlayer = new MPlayer();
-        switch(id){
-            case 1:
-                newPlayer.init("Momoi",550,300);
-                break;
+    createNewPlayer(characterName : string, callback : Function){
+        
+        this.getDefine("momoi",(res: JsonAsset)=>{
 
-            case 2:
-                newPlayer.init("Midori",500,250);
-                break;
+            let newPlayer = new MPlayer();
+            const jsonData = res.json;
 
-            default:
-                break;
-        }
-        return newPlayer;
+            let _name = jsonData._name;
+            let maxHp = jsonData.maxHp;
+            let maxMp = jsonData.maxMp;
+            let weapons = jsonData.weapons;
+
+
+            newPlayer.init(_name,maxHp,maxMp);
+            weapons.forEach(id => {
+                newPlayer.addWeapon_name(this.weapons.get(id));
+            });
+
+            callback(newPlayer);
+        });
+        
+        
+    }
+
+    public getWeaponInfoById(id : number, callback : Function){
+        this.getWeaponInfoByName(this.weapons.get(id),callback);
     }
 
     //加载武器预制体，通过回调方法去执行
-    getWeaponInfo(name : string, callback : Function) : void{
-        let path = `weapon/${name}`
+    public getWeaponInfoByName(name : string, callback : Function){
 
-        resources.load(path, Prefab, (err, weaponPrefab)=>{
+        resources.load(`weapon/${name}`, Prefab, (err : any, weaponPrefab)=>{
             if(err){
-                console.error("Failed to load weapon Prefab: " + name);
+                error(err.message || err);
                 return;
             }
-            callback!(weaponPrefab);
+            callback(weaponPrefab);
+            
         });
 
+    }
+
+    public getDefine(name : string, callback : Function){
+        resources.load(`define/${name}`, (err: any, res: JsonAsset) => {
+            if (err) {
+                error(err.message || err);
+                return;
+            }
+            // 获取到 Json 数据
+            callback(res);
+        })
     }
 }
 

@@ -6,29 +6,32 @@ const { ccclass, property } = _decorator;
 
 @ccclass('MPlayer')
 export class MPlayer {
-    //bind
 
-    private controller : PlayerController;
+    public controller : PlayerController;
+    public node : Node;
 
     //data
     public name : string;
     public maxHp : number;
     public maxMp : number;
 
-    init(name :string, maxHp : number, maxMp:number) : void{
+    public weapons_name : Array<string> = new Array<string>();
+    public weapons_component : Array<WeaponBase> = new Array<WeaponBase>();
+
+    init(name :string, maxHp : number, maxMp : number) : void{
         this.name = name;
         this.maxHp = maxHp;
         this.maxMp = maxMp;
     }
 
-    addWeapon(wepName : string){
-
+    addWeapon_name(wepName : string){
+        this.weapons_name.push(wepName);
     }
 
-
-    public getController(): PlayerController{
-        return this.controller;
+    addWeapon_component(weaCom : WeaponBase){
+        this.weapons_component.push(weaCom);
     }
+
 }
 
 

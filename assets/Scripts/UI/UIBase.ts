@@ -4,12 +4,7 @@ const { ccclass, property } = _decorator;
 
 @ccclass('UIBase')
 export class UIBase extends Component { 
-    //todo:提供一系列ui基本功能,初始化，关闭
-
-
-    public init() : void{
-
-    }
+    //提供一系列ui基本功能,初始化，关闭
 
     protected onClose() : void{
         UIManager.instance().closeUI(this, true);
@@ -18,10 +13,6 @@ export class UIBase extends Component {
 
     protected onHidden() : void{
         UIManager.instance().closeUI(this, false);
-    }
-
-    public onDestroyThisUI(): void{
-
     }
 
 }
