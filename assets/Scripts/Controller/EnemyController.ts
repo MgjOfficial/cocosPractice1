@@ -3,12 +3,10 @@ const { ccclass, property } = _decorator;
 
 @ccclass('EnemyController')
 export class EnemyController extends Component {
-    start() {
-        
-    }
+    
 
-    update(deltaTime: number) {
-        
+    onHit(){
+        console.log(`[${this.node.name} on hit]`);
     }
 }
 

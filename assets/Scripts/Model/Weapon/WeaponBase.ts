@@ -31,17 +31,10 @@ export class WeaponBase extends Component {
     }
 
 
-    //待继承方法
+    // //攻击判定
+    // todo: 攻击判定以每个武器自己特有的范围判断,在武器内单独定制判断，重载的时候any可以替换成别的类型
+    attackDetection(target : any) : void{};
 
-    //执行武器的攻击行为(normal attack)
-    fire(owner : MPlayer):void{};
-
-
-    // output(){
-    //     console.log("weapon base output");
-    // }
-
-    //公共方法
 
 
     //检测当前是不是在cd中
@@ -51,16 +44,20 @@ export class WeaponBase extends Component {
         return !(difInSeconds > this.cooldown);
     }
     
-    //UI方法
+    //UI方法，在ui中进行事件回调注册
+    //当指定按钮按下
     onTouchStart(e : EventTouch){
         console.log("weapon base on touch start");
     }
+    //当指定按钮按下并拖动
     onTouchMove(e : EventTouch){
 
     }
+    //当指定按钮在ui范围内松开
     onTouchEnd(e : EventTouch){
         console.log("weapon base on touch end");
     }
+    //当指定按钮在ui范围外松开
     onTouchCancel(e : EventTouch){
         console.log("weapon base on touch cancel");
     }

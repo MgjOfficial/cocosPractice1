@@ -9,6 +9,11 @@ const { ccclass, property } = _decorator;
 export class GameSceneLauncher extends Component {
     //场景的启动器
 
+    //测试
+    @property({
+        type: [Node],
+    })
+    enemys : Node[] = [];
 
     protected onLoad(): void {
         /*
@@ -61,8 +66,9 @@ export class GameSceneLauncher extends Component {
             
     
         });
-
-        
+        this.enemys.forEach(e => {
+            GameManager.instance().addEnemy(e);
+        });
     }
 }
 

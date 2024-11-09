@@ -8,7 +8,7 @@ const { ccclass, property } = _decorator;
 export class GameManager extends Singleton<GameManager>{
     public player : MPlayer;
 
-
+    emenys : Array<Node> = new Array<Node>();
 
     //初始化玩家数据
     initPlayerInfo(characterID: number){
@@ -24,6 +24,10 @@ export class GameManager extends Singleton<GameManager>{
             this.player = mp;
         })
         
+    }
+
+    addEnemy(enemy:Node){
+        this.emenys.push(enemy);
     }
 }
 

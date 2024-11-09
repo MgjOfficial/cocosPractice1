@@ -49,6 +49,7 @@ export class JoyStick extends Component {
     }
     
     onTouchStart(e:EventTouch):void {
+        //console.log(`Joy stick touch start.`);
         let pos_touch = e.getUILocation();
         let uiTransform = this.node.getComponent(UITransform);
         let pos_nodeSpace = uiTransform.convertToNodeSpaceAR(new Vec3(pos_touch.x, pos_touch.y, 0));
@@ -74,13 +75,13 @@ export class JoyStick extends Component {
     }
 
     onTouchEnd(e:EventTouch) {
-        console.log("touch end");
+        //console.log(`Joy stick touch end`);
         this.pole.setPosition(new Vec3(0,0,0));
         this.playerController.stopMove();
     }
 
     onTouchCancel(e:EventTouch) {
-        console.log("touch cancle");
+        //console.log(`Joy stick touch cancle`);
         this.pole.setPosition(new Vec3(0,0,0));
         this.playerController.stopMove();
     }
