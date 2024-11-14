@@ -1,6 +1,7 @@
 import { _decorator, Component, director, error, instantiate, Node, path, Prefab, resources } from 'cc';
 import Singleton from '../Common/Singleton';
 import { UIBase } from '../UI/UIBase';
+import { PATHS } from '../Common/PathUitl';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIManager')
@@ -23,7 +24,7 @@ export class UIManager extends Singleton<UIManager> {
     //todo: ui管理器职能，加载ui，关闭ui，管理ui容器，提供获取某个ui的方法(通过name)
 
     //开启ui,当已经加载过ui的时候，直接提取出来，否则加载ui
-    public openUI(name : string, callback : Function) : void{
+    openUI(name : string, callback : Function) : void{
         //todo: 设置ui层级参数
 
         console.log("open ui : " + name);
@@ -32,8 +33,8 @@ export class UIManager extends Singleton<UIManager> {
             this.uiMap.get(name).node.active = true;
         }
         else{
-            let path = `ui/${name}`;
-            // console.log(path);
+            //let path = `prefab/ui/${name}`;
+            let path = `${PATHS.UI}${name}`;
             resources.load(path, Prefab, (err, uiPrefab)=>{
                 if(err){
                     console.error("Failed to load UI Prefab: " + name);

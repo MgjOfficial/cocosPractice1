@@ -38,11 +38,10 @@ export class UIPrepare extends UIBase {
 
     public enterGame(mapIdx : number){
         let charId = this.buildSelect.getSelectedChar();
-        if(charId === -1){return;}
-
-        //console.log(`select map ${mapIdx}`);
-
-        //默认武器1测试
+        if(charId === -1){
+            console.log(`未选择角色`);
+            return;
+        }
         GameManager.instance().initPlayerInfo(charId);
 
         director.loadScene("GameScene");

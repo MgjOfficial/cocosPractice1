@@ -1,5 +1,6 @@
 import { _decorator, AudioClip, AudioSource, Component, Node, resources } from 'cc';
 import Singleton from '../Common/Singleton';
+import { PATHS } from '../Common/PathUitl';
 const { ccclass, property } = _decorator;
 
 @ccclass('AudioManager')

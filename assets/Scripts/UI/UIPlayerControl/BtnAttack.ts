@@ -1,9 +1,9 @@
 import { _decorator, Component, EventHandheld, EventHandler, EventTouch, Node } from 'cc';
-import { WeaponBase } from '../../Model/Weapon/WeaponBase';
+import { WeaponBase } from '../../Controller/Weapon/WeaponBase';
 const { ccclass, property } = _decorator;
 
-@ccclass('Btn_Attack')
-export class Btn_Attack extends Component {
+@ccclass('BtnAttack')
+export class BtnAttack extends Component {
 
     private onTouchStart : Function;
     private onTouchMove : Function;

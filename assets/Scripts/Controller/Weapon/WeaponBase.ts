@@ -1,7 +1,6 @@
 import { _decorator, Component, EventTouch, Node } from 'cc';
-import { MPlayer } from '../MPlayer';
+import { MWeapon } from '../../Model/MWeapon';
 const { ccclass, property } = _decorator;
-
 @ccclass('WeaponBase')
 export class WeaponBase extends Component {
 
@@ -10,22 +9,20 @@ export class WeaponBase extends Component {
     protected weaponName : string;
     protected attack : number;      //攻击力    
     protected cooldown : number;    //攻击间隔，冷却
-    protected range : number;       //攻击范围
-    protected scale : number;       //判定尺寸
 
     //辅助数据
     protected lastAtkTimestamp : number;
+
+    protected data : MWeapon;
 
     public setOwner(owner : Node){
         this.owner = owner;
     }
 
-    public init(name : string, attack : number, cooldown :number, range : number, scale: number ) : void {
+    public init(name : string, attack : number, cooldown :number) : void {
 
         this.attack = attack;
         this.cooldown = cooldown;
-        this.range = range;
-        this.scale = scale;
 
         this.lastAtkTimestamp = Date.now() - cooldown * 1000;
     }
@@ -33,7 +30,7 @@ export class WeaponBase extends Component {
 
     // //攻击判定
     // todo: 攻击判定以每个武器自己特有的范围判断,在武器内单独定制判断，重载的时候any可以替换成别的类型
-    attackDetection(target : any) : void{};
+    protected attackDetection(target : any) : void{};
 
 
 

@@ -1,6 +1,6 @@
 import { _decorator, Animation, animation, Camera, Component, debug, director, EventKeyboard, EventMouse, Input, input, KeyCode, math, Node, PostSettingsInfo, Prefab, Quat, Screen, v3, Vec2, Vec3 } from 'cc';
 import FireManager from '../Manager/FireManager';
-import { MPlayer } from '../Model/MPlayer';
+import { MCharacter } from '../Model/MPlayer';
 import { WeaponTest } from '../Model/Weapon/WeaponTest';
 import AudioManager from '../Manager/AudioManager';
 import EventManager from '../Manager/EventManager';

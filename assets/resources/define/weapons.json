@@ -1,4 +1,17 @@
-{
-    "weapon_momoi" : 1,
-    "weapon_midori" : 2
-}
+[
+    {
+        "id" : 1,
+        "name" : "w_momoi",
+        "attack" : 20,
+        "cooldown" : 1,
+        "rangeArray" : [1]
+    },
+
+    {
+        "id" : 2,
+        "name" : "w_midori",
+        "attack" : 20,
+        "cooldown" : 1,
+        "rangeArray" : [1,2,3,4]
+    }
+]

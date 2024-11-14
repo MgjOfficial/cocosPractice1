@@ -1,15 +1,16 @@
 import { _decorator, Button, Component, error, EventTouch, Node, NodeEventType, Vec2, Vec3 } from 'cc';
 import { JoyStick } from './JoyStick';
 import { UIBase } from '../UIBase';
-import { Btn_Attack } from './Btn_Attack';
-import { MPlayer } from '../../Model/MPlayer';
+import { BtnAttack } from './BtnAttack';
+import { MCharacter } from '../../Model/MCharacter';
 import { GameManager } from '../../Manager/GameManager';
+import { WeaponBase } from '../../Controller/Weapon/WeaponBase';
 const { ccclass, property } = _decorator;
 
 @ccclass('UIPlayerControl')
 export class UIPlayerControl extends UIBase {
 
-    mplayer : MPlayer;
+    mplayer : MCharacter;
 
     @property(Node)
     joyStickRoot : Node;
@@ -31,7 +32,7 @@ export class UIPlayerControl extends UIBase {
 
     
     public init(): void {
-        let mplayer = GameManager.instance().player;
+        let mc = GameManager.instance().mCharacter;
         this.actionButtons = [];//初始化
 
         this.joyStick = this.joyStickRoot.getComponent(JoyStick);
@@ -45,37 +46,14 @@ export class UIPlayerControl extends UIBase {
         let abtnsRoot = this.node.getChildByName("ActionButtons");
         let abtns = abtnsRoot.getComponentsInChildren(Button);
 
-        let weps = mplayer.weapons_component;
+        let weps = mc.weapons;
         abtns.forEach(btn => {
+            let wpComponent = weps[0].node.getComponent(WeaponBase);
             this.actionButtons.push(btn);
-            let btn_atk = btn.getComponent(Btn_Attack);
+            let btnAtk = btn.getComponent(BtnAttack);
 
-            btn_atk?.init(weps[0], weps[0].onTouchStart, weps[0].onTouchMove, weps[0].onTouchEnd, weps[0].onTouchCancel);
-
-            //sample init
-            // btn_atk?.init(this.node, 
-            // (e: EventTouch)=>{
-            //     e.getUILocation(this.startPos);
-            //     console.log(this.startPos);
-            //     console.log("uiplayercontroller call on touch start");
-            // },
-            // (e: EventTouch)=>{
-            //     e.getUILocation(this.curPos);
-            //     console.log(this.curPos);
-            //     console.log("uiplayercontroller call on touch move");
-            // },
-            // (e: EventTouch)=>{
-            //     e.getUILocation(this.tarPos);
-            //     console.log(this.tarPos);
-            //     console.log("uiplayercontroller call on touch end");
-            // },
-            // (e: EventTouch)=>{
-            //     e.getUILocation(this.tarPos);
-            //     console.log(this.tarPos);
-            //     console.log("uiplayercontroller call on touch cancel");
-            // }
-            // )
-            
+            btnAtk?.init(wpComponent, wpComponent.onTouchStart, wpComponent.onTouchMove,
+                wpComponent.onTouchEnd, wpComponent.onTouchCancel);
         });
     }
 

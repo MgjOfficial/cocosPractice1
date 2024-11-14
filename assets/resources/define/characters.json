@@ -1,0 +1,11 @@
+[
+    {
+        "id" : 1,
+        "name" : "momoi",
+        "maxHp" : 550,
+        "maxEnergy" : 300,
+        "speed" : 10,
+        "defence" : 10,
+        "weapons" : [1]
+    }
+]

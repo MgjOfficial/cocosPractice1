@@ -2,7 +2,8 @@ import { _decorator, Component, director, game, instantiate, Node, Prefab, resou
 import { GameManager } from '../Manager/GameManager';
 import { UIManager } from '../Manager/UIManager';
 import { UIPlayerControl } from '../UI/UIPlayerControl/UIPlayerControl';
-import { WeaponBase } from '../Model/Weapon/WeaponBase';
+import { WeaponBase } from '../Controller/Weapon/WeaponBase';
+import { DataManager } from '../Manager/DataManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameSceneLauncher')
@@ -15,57 +16,44 @@ export class GameSceneLauncher extends Component {
     })
     enemys : Node[] = [];
 
-    protected onLoad(): void {
+    protected async onLoad(){
         /*
-        todo
-        1.加载玩家模型
-        2.加载武器
-        3.加载操控UI界面
-        etc..
-        */
-        let mplayer = GameManager.instance().player;
-        if(!mplayer){
-            console.error("player data is not existed");
+         * 1.加载玩家模型
+         * 2.加载武器
+         * 3.加载操控UI界面
+         * etc..
+         */
+        let mc = GameManager.instance().mCharacter;
+        if(mc == undefined || mc == null){
+            console.error("character data model is not existed");
         }
 
-        // loading character
-        resources.load(`character/${mplayer.name}`, Prefab, (err, pfb)=>{
-            if(err){
-                console.error(err.message);
-                return null;
-            }
-            let chaNode = instantiate(pfb);
-            chaNode.setParent(director.getScene().getChildByName("Canvas").getChildByName("GameRoot"));
-            mplayer.node = chaNode;
-            //console.log("start to load weapon");
+        await DataManager.instance().loadCharacterPrefab(mc.id, (characterNode)=>{
+            characterNode.setParent(director.getScene().getChildByName("Canvas").getChildByName("GameRoot"));
+            mc.node = characterNode;
+        
+        })
+        console.log("character load complete")
 
-            mplayer.weapons_name.forEach(wep => {
-                resources.load(`weapon/${wep}`, Prefab, (err, pfb)=>{
-                    if(err){
-                        console.error(err.message);
-                        return null;
-                    }
-                    let wepNode = instantiate(pfb);
-                    wepNode.setParent(chaNode);
-                    wepNode.active = true;
-                    console.log(`load weapon [${wep}] complete`);
+        console.log("start to load weapon");
+        for(let i = 0; i < mc.weapons.length; i++){
+            let wp = mc.weapons[i];
+            await DataManager.instance().loadWeaponPrefab(wp.id, (weaponNode)=>{
+                weaponNode.setParent(mc.node);
+                weaponNode.active = true;
+                wp.node = weaponNode; // 绑定节点
+                weaponNode.getComponent(WeaponBase).setOwner(mc.node);
+                console.log(`load weapon [${wp.name}] complete`);
+            })
+        }
+        console.log("weapon load complete")
 
-                    const wc = wepNode.getComponent(WeaponBase);
+        console.log("start load ui")
+        UIManager.instance().openUI("UIPlayerControl",(ui : UIPlayerControl) =>{
+            ui.node.setParent(this.node.parent.getChildByName("Canvas").getChildByName("UIRoot"));
+            ui.init();
+        })
 
-                    mplayer.addWeapon_component(wc);
-                    wc.setOwner(chaNode);
-                })
-
-                
-            });
-            this.scheduleOnce(UIManager.instance().openUI("UIPlayerControl",(ui : UIPlayerControl) =>{
-                ui.node.setParent(this.node.parent.getChildByName("Canvas").getChildByName("UIRoot"));
-                ui.init();
-            }), 1);
-
-            
-    
-        });
         this.enemys.forEach(e => {
             GameManager.instance().addEnemy(e);
         });

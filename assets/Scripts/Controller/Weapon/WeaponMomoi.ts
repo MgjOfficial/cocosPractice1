@@ -1,6 +1,5 @@
 import { _decorator, Collider2D, Color, Component, Contact2DType, EventTouch, Game, Graphics, IPhysics2DContact, math, MATH_FLOAT_ARRAY, misc, Node, NodeSpace, PolygonCollider2D, v2, Vec2, Vec3 } from 'cc';
 import { WeaponBase } from './WeaponBase';
-import { MPlayer } from '../MPlayer';
 import { GameManager } from '../../Manager/GameManager';
 import { EnemyController } from '../../Controller/EnemyController';
 const { ccclass, property } = _decorator;
@@ -8,11 +7,6 @@ const { ccclass, property } = _decorator;
 
 @ccclass('WeaponMomoi')
 export class WeaponMomoi extends WeaponBase {
-
-   
-    protected start(): void {
-        // 此处this.skill_area与事件触发的this.skill_area不相同
-    }
 
     // UI相关
     @property(Node)
@@ -33,12 +27,12 @@ export class WeaponMomoi extends WeaponBase {
     onTouchStart(e : EventTouch){
         //this 指的是传入on的target，以当前对象传入才可以正确调用this.xxx
         this.skillIndicatorNode.active = true;
-        this.skillIndicatorNode.setWorldPosition(GameManager.instance().player.node.worldPosition);
+        this.skillIndicatorNode.setWorldPosition(GameManager.instance().mCharacter.node.worldPosition);
         this.touchStartPos = e.getUILocation();
         //console.log(`weapon momoi on touch start, pos ${this.touchStartPos}`);
     }
     onTouchMove(e : EventTouch){
-        this.skillIndicatorNode.setWorldPosition(GameManager.instance().player.node.worldPosition);
+        this.skillIndicatorNode.setWorldPosition(GameManager.instance().mCharacter.node.worldPosition);
 
         let tarPos = e.getUILocation();
         var dx = tarPos.x - this.touchStartPos.x;
@@ -77,7 +71,7 @@ export class WeaponMomoi extends WeaponBase {
         this.schedule(function(){
             console.log(`atk detect : [round ${count++}]`);
             const enemys = GameManager.instance().emenys;
-            const player = GameManager.instance().player.node;
+            const player = GameManager.instance().mCharacter.node;
             const playerPos = player.position;
             enemys.forEach(e => {
                 const enemyPos = e.position;
@@ -106,7 +100,7 @@ export class WeaponMomoi extends WeaponBase {
 
     // 攻击判定框辅助线测试绘制
     attackDetectionDraw(targetDirection : Vec2){
-        let playerNode = GameManager.instance().player.node;
+        let playerNode = GameManager.instance().mCharacter.node;
         let centerPos = v2(playerNode.position.x - this.node.position.x,playerNode.position.y - this.node.position.y);
         const graphics = this.node.getComponent(Graphics);
 
