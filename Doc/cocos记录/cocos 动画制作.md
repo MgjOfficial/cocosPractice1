@@ -1,44 +1,34 @@
-import { _decorator, Animation, animation, Camera, Component, debug, director, EventKeyboard, EventMouse, Input, input, KeyCode, math, Node, PostSettingsInfo, Prefab, Quat, Screen, v3, Vec2, Vec3 } from 'cc';
-import { MCharacter } from '../Model/MCharacter';
-import AudioManager from '../Manager/AudioManager';
-import EventManager from '../Manager/EventManager';
-import { UIManager } from '../Manager/UIManager';
-const { ccclass, property } = _decorator;
+@[TOC] cocos-帧动画制作
 
-@ccclass('PlayerController')
-export class PlayerController extends Component {
+# cocos的帧动画如何实现
 
-    @property
-    private moveSpeed : number = 100;
-    private curDirection : Vec3;
-    private isMoving : boolean;
-
-    
-
-    //动画控制器
-    anim : Animation;
-
-    protected onLoad(): void {
-        this.anim = this.node.getComponentInChildren(Animation);
-        
-    }
-
-    protected onDestroy(): void {
-        
-    }
-
-    start() {
-        this.curDirection = new Vec3(0,0,0);
-        this.isMoving = false;
-    }
+记录自己使用cocos的学习历程
 
 
-    update(deltaTime: number) {
-        this.moveUpdate(deltaTime);
-    }
+### 素材切割
 
+通过photoshop的切片工具对图进行切割，保存->存储为web所用格式
 
-    private lastDirForAnim : number = 1;
+### animation制作
+
+1. 给物体添加上animation组件
+
+2. 制作animation clip
+
+3. 编写程序化动画播放处理
+
+### 动画图&animation controller
+
+动画图(animation graph):类似于unity的动画控制一样使用状态机进行管理
+
+目前来说在使用浏览器进行调试时使用动画图似乎存在报空的错误，但是在使用编辑器调试就没有问题。。以后再来看，根据网上说的复杂点的动画可以用复杂的软件去做
+
+所以还是选择直接使用程序去对动画进行播放
+
+移动的代码测试如下，也许用状态机的模板会更好，但是模板暂时不造
+
+```typescript
+private lastDirForAnim : number = 1;
     moveUpdate(deltaTime: number):void{
         //0:idle, 1:front, 2: left, 3:right, 4:back
         let dirForAnim : number = 0;
@@ -69,61 +59,32 @@ export class PlayerController extends Component {
                         default:this.anim.play('idle_f');break;
                     }
                 }
-                break;
+            break;
+
             case 1: 
                 if(!this.anim.getState('walk_f').isPlaying){
                     this.anim.play('walk_f');
                 }
-                break;
+            break;
+
             case 2: 
                 if(!this.anim.getState('walk_l').isPlaying){
                     this.anim.play('walk_l');
                 }
-                break;
+            break;
+
             case 3: 
                 if(!this.anim.getState('walk_r').isPlaying){
                     this.anim.play('walk_r');
                 }
-                break;
+            break;
+
             case 4:
                 if(!this.anim.getState('walk_b').isPlaying){
                     this.anim.play('walk_b');
                 }
-                break;
-            default:
-                break;
+            break;
         }
     }
 
-    /**
-     * 移动操作输入调用
-     * @param direction 方向
-     * @param magnification 移动速度倍率
-     */
-    public setMove(direction : Vec3, magnification : number):void{
-        if(Math.abs(this.curDirection.x) < Math.abs(this.curDirection.y)){
-
-            this.lastDirForAnim = (this.curDirection.y < 0)? 1 : 4;
-        }
-        else{
-            this.lastDirForAnim = (this.curDirection.x < 0)? 2 : 3;
-        }
-        
-
-        this.curDirection = direction;
-        this.isMoving = true;
-    }
-
-    /**
-     * 停止移动，但是方向(朝向)保留
-     */
-
-    public stopMove():void{
-
-        this.isMoving = false;
-    }
-
-
-}
-
-
+```

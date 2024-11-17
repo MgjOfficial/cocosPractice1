@@ -2,6 +2,7 @@ import { _decorator, Collider2D, Color, Component, Contact2DType, EventTouch, Ga
 import { WeaponBase } from './WeaponBase';
 import { GameManager } from '../../Manager/GameManager';
 import { EnemyController } from '../../Controller/EnemyController';
+import { AttackerInfo } from '../../Common/CalculationUtil';
 const { ccclass, property } = _decorator;
 
 
@@ -73,6 +74,11 @@ export class WeaponMomoi extends WeaponBase {
             const enemys = GameManager.instance().emenys;
             const player = GameManager.instance().mCharacter.node;
             const playerPos = player.position;
+
+            const atkInfo : AttackerInfo = {
+                atk : 8
+            }
+
             enemys.forEach(e => {
                 const enemyPos = e.position;
                 const distance = Math.sqrt((enemyPos.x - playerPos.x)*(enemyPos.x - playerPos.x) +
@@ -86,7 +92,9 @@ export class WeaponMomoi extends WeaponBase {
                 //console.log(angle); // 角度正确，可以使用，需要修改forward的初始值，该计算范围为-180~180
                 if(angle <= faceAngle + this.endAngle && angle >= faceAngle + this.startAngle){
                     //console.log(`[${e.name}] in target`);
-                    e.getComponent(EnemyController).onHit();
+                    e.getComponent(EnemyController).onHit(atkInfo, (dmg : number)=>{
+                        console.log(`deal damage [${dmg}] to ${e.name}`);
+                    });
                 }
 
                 
@@ -97,6 +105,8 @@ export class WeaponMomoi extends WeaponBase {
         }, 0.5, 2);
         
     }
+
+    
 
     // 攻击判定框辅助线测试绘制
     attackDetectionDraw(targetDirection : Vec2){

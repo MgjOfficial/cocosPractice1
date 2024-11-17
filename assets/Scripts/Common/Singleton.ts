@@ -12,10 +12,6 @@ export default class Singleton<T extends Singleton<T>> {
         }
         return Singleton.instances[className] as T;
     }
-
-    constructor(){
-
-    }
 }
 
 

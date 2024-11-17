@@ -9,5 +9,16 @@ export class MEnemy {
     maxHp : number;
     speed : number;
     attack : number;
+    defend : number;
+
+    constructor(id: number, name: string, maxHp: number, speed: number, attack: number, defend : number) {
+        this.id = id;
+        this.name = name;
+        this.curHp = maxHp;
+        this.maxHp = maxHp;
+        this.speed = speed;
+        this.attack = attack;
+        this.defend = defend;
+    }
 }
 
