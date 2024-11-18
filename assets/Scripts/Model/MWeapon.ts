@@ -5,8 +5,7 @@ const { ccclass, property } = _decorator;
 export class MWeapon {
 
     // 绑定节点
-    node : Node;
-
+    public node : Node;
     
     // 武器数据
     id : number;

@@ -3,6 +3,7 @@ import Singleton from '../Common/Singleton';
 import { MCharacter } from '../Model/MCharacter';
 import { MWeapon } from '../Model/MWeapon';
 import { PATHS } from '../Common/PathUitl';
+import { WeaponBase } from '../Controller/Weapon/WeaponBase';
 const { ccclass, property } = _decorator;
 
 
@@ -109,6 +110,14 @@ export class DataManager extends Singleton<DataManager> {
                     return;
                 }
                 let wepNode = instantiate(pfb);
+                // 加载武器的node时初始化数据
+                let cp = wepNode.getComponent(WeaponBase);
+                if(cp == undefined || cp == null){
+                    console.error(`weapon prefab [${id}] has no WeaponBase component!`)
+                    return;
+                }
+                cp.init(mw);
+
                 callback(wepNode);
                 resolve();
             });

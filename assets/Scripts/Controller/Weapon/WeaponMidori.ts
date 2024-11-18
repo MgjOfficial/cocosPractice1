@@ -10,43 +10,22 @@ export class WeaponMidori extends WeaponBase {
 
     @property(Node)
     skillIndicatorNode : Node;
-    // attack range
 
-    @property({
-        type:Number,
-        displayName:"攻击范围起始半径",
-    })
-    startRangeRadius : number = 100;
-
-    @property({
-        type:Number,
-        displayName:"攻击范围最大半径",
-    })
-    maxRangeRadius : number = 400;
-
-    @property({
-        type:Number,
-        displayName:"攻击范围增长速度",
-    })
-    rangeRadiusIncreaseRate : number = 20;
-
-    @property({
-        type:Number,
-        displayName:"初始目标数",
-    })
-    startTargetNum : number = 3;
-
-    @property({
-        type:Number,
-        displayName:"目标数增长速度(间隙)",
-    })
-    targetIncreaseInterval : number = 0.5;
-
-    @property({
-        type:Number,
-        displayName:"最大目标数",
-    })
-    maxTargetNum : number = 6;
+    /* 
+     * info.rangeArray 攻击范围与目标相关参数
+     * [0] : 攻击范围起始半径 default = 100
+     * [1] : 攻击范围最大半径 default = 400
+     * [2] : 攻击范围增长速度 default = 20
+     * [3] : 初始目标数 default = 3
+     * [4] : 目标数增长速度(间隙) default = 0.5
+     * [5] : 最大目标数 default = 6
+     */
+    startRangeRadius : number;
+    maxRangeRadius : number;
+    rangeRadiusIncreaseRate : number;
+    startTargetNum : number;
+    targetIncreaseInterval : number;
+    maxTargetNum : number;
 
     private currentTargetNum : number;
     private currentRangeRadius : number;
@@ -62,6 +41,21 @@ export class WeaponMidori extends WeaponBase {
         if(this.touching){
             this.attackChargeUpdate(deltaTime);
         }
+    }
+
+    protected analyzeRangeArray(): void {
+    
+        if(this.info.rangeArray.length != 6){
+            console.error("rangeArray length error");
+            return;
+        }
+        // 解析数组并赋值
+        this.startRangeRadius = this.info.rangeArray[0];
+        this.maxRangeRadius = this.info.rangeArray[1];
+        this.rangeRadiusIncreaseRate = this.info.rangeArray[2];
+        this.startTargetNum = this.info.rangeArray[3];
+        this.targetIncreaseInterval = this.info.rangeArray[4];
+        this.maxTargetNum = this.info.rangeArray[5];
     }
 
     // 开始充能/蓄力攻击

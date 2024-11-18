@@ -7,17 +7,16 @@ const { ccclass, property } = _decorator;
 
 @ccclass('GameManager')
 export class GameManager extends Singleton<GameManager>{
-    mCharacter : MCharacter;
+    public mCharacter : MCharacter;
 
-    emenys : Array<Node> = new Array<Node>();
+    public emenys : Array<Node> = new Array<Node>();
 
     //初始化玩家数据
-    initPlayerInfo(characterID: number){
-
+    public initPlayerInfo(characterID: number){
         this.mCharacter = DataManager.instance().getCharacterInfo(characterID);
     }
 
-    addEnemy(enemy:Node){
+    public addEnemy(enemy:Node){
         this.emenys.push(enemy);
     }
 }

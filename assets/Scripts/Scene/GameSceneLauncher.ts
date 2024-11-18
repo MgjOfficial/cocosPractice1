@@ -4,6 +4,7 @@ import { UIManager } from '../Manager/UIManager';
 import { UIPlayerControl } from '../UI/UIPlayerControl/UIPlayerControl';
 import { WeaponBase } from '../Controller/Weapon/WeaponBase';
 import { DataManager } from '../Manager/DataManager';
+import { PlayerController } from '../Controller/PlayerController';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameSceneLauncher')
@@ -31,7 +32,7 @@ export class GameSceneLauncher extends Component {
         await DataManager.instance().loadCharacterPrefab(mc.id, (characterNode)=>{
             characterNode.setParent(director.getScene().getChildByName("Canvas").getChildByName("GameRoot"));
             mc.node = characterNode;
-        
+            characterNode.getComponent(PlayerController).init(mc);
         })
         console.log("character load complete")
 

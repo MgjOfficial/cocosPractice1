@@ -8,8 +8,7 @@ const { ccclass, property } = _decorator;
 export class MCharacter {
 
     // 绑定控制器，节点
-    controller : PlayerController;
-    node : Node; 
+    public node : Node; 
 
     // 数据
     id : number;
@@ -36,13 +35,8 @@ export class MCharacter {
         this.curEnergy = maxEnergy;
         this.weapons = weapons;
     }
-    init(name :string, maxHp : number) : void{
-        this.name = name;
-        this.maxHp = maxHp;
-    }
 
-
-    addWeapon(wep : MWeapon){
+    public addWeapon(wep : MWeapon){
         this.weapons.push(wep);
     }
 

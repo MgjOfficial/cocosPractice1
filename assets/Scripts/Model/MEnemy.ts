@@ -3,6 +3,9 @@ const { ccclass, property } = _decorator;
 
 @ccclass('MEnemy')
 export class MEnemy {
+
+    public node : Node;
+
     id : number;
     name : string;
     curHp : number;

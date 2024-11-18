@@ -15,15 +15,21 @@ export class WeaponMomoi extends WeaponBase {
     touchStartPos : Vec2;
     touchEndPos : Vec2;
 
-    // 攻击判定相关
+    fanRadius : number;
+    startAngle : number;
+    endAngle : number;
+    protected analyzeRangeArray(): void {
 
-    @property(Number)
-    fanRadius : number = 300;
-    @property(Number)
-    startAngle : number = -23;
-    @property(Number)
-    endAngle : number = 23;
+        if(this.info.rangeArray.length != 3){
+            console.error("rangeArray length error");
+            return;
+        }
 
+        this.fanRadius = this.info.rangeArray[0];
+        this.startAngle = this.info.rangeArray[1];
+        this.endAngle = this.info.rangeArray[2];
+
+    }
 
     onTouchStart(e : EventTouch){
         //this 指的是传入on的target，以当前对象传入才可以正确调用this.xxx
@@ -110,6 +116,7 @@ export class WeaponMomoi extends WeaponBase {
 
     // 攻击判定框辅助线测试绘制
     attackDetectionDraw(targetDirection : Vec2){
+
         let playerNode = GameManager.instance().mCharacter.node;
         let centerPos = v2(playerNode.position.x - this.node.position.x,playerNode.position.y - this.node.position.y);
         const graphics = this.node.getComponent(Graphics);
@@ -140,7 +147,7 @@ export class WeaponMomoi extends WeaponBase {
         graphics.stroke();
     }
 
-    attackDetectionDrawClean(){
+    private attackDetectionDrawClean(){
         this.node.getComponent(Graphics).clear();
     }
 

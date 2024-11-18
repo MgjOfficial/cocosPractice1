@@ -4,7 +4,7 @@
         "name" : "w_momoi",
         "attack" : 20,
         "cooldown" : 1,
-        "rangeArray" : [1]
+        "rangeArray" : [330,-24,24]
     },
 
     {
@@ -12,6 +12,6 @@
         "name" : "w_midori",
         "attack" : 20,
         "cooldown" : 1,
-        "rangeArray" : [1,2,3,4]
+        "rangeArray" : [100,400,20,3,0.5,6]
     }
 ]

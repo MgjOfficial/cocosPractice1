@@ -1,51 +1,35 @@
 import { _decorator, Animation, animation, Camera, Component, debug, director, EventKeyboard, EventMouse, Input, input, KeyCode, math, Node, PostSettingsInfo, Prefab, Quat, Screen, v3, Vec2, Vec3 } from 'cc';
 import { MCharacter } from '../Model/MCharacter';
-import AudioManager from '../Manager/AudioManager';
-import EventManager from '../Manager/EventManager';
-import { UIManager } from '../Manager/UIManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerController')
 export class PlayerController extends Component {
+    private info : MCharacter;
+    private anim : Animation;
 
-    @property
-    private moveSpeed : number = 100;
-    private curDirection : Vec3;
-    private isMoving : boolean;
+    private curDirection : Vec3 = new Vec3(0,0,0);
+    private isMoving : boolean = false;
+    private lastDirForAnim : number = 1;
 
-    
-
-    //动画控制器
-    anim : Animation;
+    public init(info : MCharacter){
+        this.info = info;
+    }
 
     protected onLoad(): void {
         this.anim = this.node.getComponentInChildren(Animation);
-        
     }
 
-    protected onDestroy(): void {
-        
-    }
-
-    start() {
-        this.curDirection = new Vec3(0,0,0);
-        this.isMoving = false;
-    }
-
-
-    update(deltaTime: number) {
+    protected update(deltaTime: number) {
         this.moveUpdate(deltaTime);
     }
-
-
-    private lastDirForAnim : number = 1;
-    moveUpdate(deltaTime: number):void{
+    
+    protected moveUpdate(deltaTime: number):void{
         //0:idle, 1:front, 2: left, 3:right, 4:back
         let dirForAnim : number = 0;
         if(this.isMoving){
             let newPos = new Vec3();
             let step = new Vec3();
-            Vec3.multiplyScalar(step, this.curDirection, this.moveSpeed * deltaTime);
+            Vec3.multiplyScalar(step, this.curDirection, this.info.speed * deltaTime);
             Vec3.add(newPos,this.node.position, step);
             this.node.setPosition(newPos);
             if(Math.abs(this.curDirection.x) < Math.abs(this.curDirection.y)){

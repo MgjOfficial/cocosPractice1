@@ -6,20 +6,18 @@ const { ccclass, property } = _decorator;
 @ccclass('EnemyController')
 export class EnemyController extends Component {
     
-    enemyInfo : MEnemy;
-
-    
+    protected info : MEnemy;
     protected start(): void {
         //test
         this.init(new MEnemy(1, "Enemy", 100, 10, 10, 5))
     }
-    init(enemyInfo : MEnemy){
-        this.enemyInfo = enemyInfo;
+    public init(info : MEnemy){
+        this.info = info;
     }
-    onHit(atkInfo : AttackerInfo, attackerCallBack : Function){
+    public onHit(atkInfo : AttackerInfo, attackerCallBack : Function){
 
         let defInfo : DefenderInfo = {
-            def : this.enemyInfo.defend,
+            def : this.info.defend,
         }
         CalculationUtil.attackCauculation(atkInfo, defInfo, attackerCallBack, (damage : number) => {
             console.log(`get demage ${damage}`)
