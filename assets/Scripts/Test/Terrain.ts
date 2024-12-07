@@ -24,6 +24,12 @@ export class Terrain extends Component {
     @property(Node)
     player:Node;
     
+    @property({
+        type: [Node],
+    })
+    pillars : Node[] = [];
+    pillars_y : number[] = []; 
+    
 
     start() {
         this.coords = new Array(this.width);
@@ -36,12 +42,30 @@ export class Terrain extends Component {
                 this.coords[i][j] = new Vec2(startPos.x + i*gridSize.x, startPos.y + j*gridSize.y);
             }
         }
+        // 按 age 升序排序
+        //people.sort((a, b) => a.age - b.age);
+        //console.log(people);
+        // 输出:
+        // [
+        //   { name: 'Bob', age: 25 },
+        //   { name: 'Alice', age: 30 },
+        //   { name: 'Charlie', age: 35 }
+        // ]
+        this.pillars.sort((a,b)=>a.getChildByName('coordY').worldPosition.y-b.getChildByName('coordY').worldPosition.y);
+
+        let len = this.node.children.length;
+        for(let i=0;i<this.pillars.length;i++){
+            this.pillars[i].setSiblingIndex(len - i - 1);
+            this.pillars_y.push(this.pillars[i].worldPosition.y);
+        }
     }
 
 
     update(deltaTime: number) {
         
     }
+
+    
 }
 
 
