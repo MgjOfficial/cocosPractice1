@@ -22,7 +22,7 @@
         "visible": false,
         "minfilter": "linear",
         "magfilter": "linear",
-        "mipfilter": "none",
+        "mipfilter": "nearest",
         "anisotropy": 0
       },
       "ver": "1.0.22",
@@ -50,7 +50,7 @@
         "height": 84,
         "rawWidth": 400,
         "rawHeight": 100,
-        "borderTop": 0,
+        "borderTop": 14.8,
         "borderBottom": 0,
         "borderLeft": 0,
         "borderRight": 0,
@@ -128,7 +128,7 @@
   "userData": {
     "type": "sprite-frame",
     "hasAlpha": true,
-    "fixAlphaTransparencyArtifacts": false,
+    "fixAlphaTransparencyArtifacts": true,
     "redirect": "b748fd27-9ad8-4acc-87e2-268f5612da75@6c48a"
   }
 }

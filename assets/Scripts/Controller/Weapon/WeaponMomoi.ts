@@ -73,6 +73,9 @@ export class WeaponMomoi extends WeaponBase {
     attackDetection(targetDirection : Vec2): void {
         let count = 0;
         const faceAngle = misc.radiansToDegrees(Math.atan2(targetDirection.y, targetDirection.x));
+        const atkInfo : AttackerInfo = {
+            atk : this.info.attack,
+        }
         this.attackDetectionDraw(targetDirection);
         //console.log(`face angle [${faceAngle}], atk angle range[${faceAngle + this.endAngle} , ${faceAngle + this.startAngle}]`);
         this.schedule(function(){
@@ -80,10 +83,6 @@ export class WeaponMomoi extends WeaponBase {
             const enemys = GameManager.instance().emenys;
             const player = GameManager.instance().mCharacter.node;
             const playerPos = player.position;
-
-            const atkInfo : AttackerInfo = {
-                atk : 8
-            }
 
             enemys.forEach(e => {
                 const enemyPos = e.position;
@@ -95,15 +94,12 @@ export class WeaponMomoi extends WeaponBase {
                 const direction = v2(enemyPos.x - playerPos.x, enemyPos.y - playerPos.y).normalize();
                 let radian = Math.atan2(direction.y, direction.x); // 计算弧度
                 let angle = misc.radiansToDegrees(radian);
-                //console.log(angle); // 角度正确，可以使用，需要修改forward的初始值，该计算范围为-180~180
                 if(angle <= faceAngle + this.endAngle && angle >= faceAngle + this.startAngle){
-                    //console.log(`[${e.name}] in target`);
                     e.getComponent(EnemyController).onHit(atkInfo, (dmg : number)=>{
                         console.log(`deal damage [${dmg}] to ${e.name}`);
                     });
                 }
 
-                
             });
             if(count == 2){
                 this.attackDetectionDrawClean();

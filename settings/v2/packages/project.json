@@ -1,3 +1,20 @@
 {
-  "__version__": "1.0.6"
+  "__version__": "1.0.6",
+  "sorting-layer": {
+    "layers": [
+      {
+        "id": 0,
+        "name": "default",
+        "value": 0
+      },
+      {
+        "id": 4,
+        "name": "Sorting Layer 1",
+        "value": 1
+      }
+    ],
+    "increaseId": 4
+  },
+  "layer": [],
+  "custom_joint_texture_layouts": []
 }

@@ -4,6 +4,7 @@ import { MCharacter } from '../Model/MCharacter';
 import { MWeapon } from '../Model/MWeapon';
 import { PATHS } from '../Common/PathUitl';
 import { WeaponBase } from '../Controller/Weapon/WeaponBase';
+import { MEnemy } from '../Model/MEnemy';
 const { ccclass, property } = _decorator;
 
 
@@ -25,32 +26,69 @@ interface WeaponData{
     rangeArray : number[];
 }
 
+interface EnemyData{
+    id : number;
+    name : string;
+    maxHp : number;
+    speed : number;
+    attack : number;
+    defence : number;
+}
+
 @ccclass('DataManager')
 export class DataManager extends Singleton<DataManager> {
 
     characters : Map<number, MCharacter> = new Map<number, MCharacter>();
     weapons : Map<number, MWeapon> = new Map<number, MWeapon>();
+    enemys : Map<number, MEnemy> = new Map<number, MEnemy>();
 
     //整合从resoureces内加载内容的方法
     async init(){
         // 初始化武器表
         await this.loadDefine("weapons", (res: JsonAsset)=>{
-            (res.json as WeaponData[]).forEach(w => {
-                this.weapons.set(w.id, new MWeapon(w.id, w.name, w.attack, w.cooldown,
-                     w.rangeArray));
+            (res.json as WeaponData[]).forEach(d => {
+                this.weapons.set(d.id, 
+                    new MWeapon(
+                        d.id, 
+                        d.name, 
+                        d.attack, 
+                        d.cooldown,
+                        d.rangeArray
+                    ));
             });
         })
     
         // 初始化角色表
         await this.loadDefine("characters", (res: JsonAsset)=>{
-
-            (res.json as CharacterData[]).forEach(c =>{
+            (res.json as CharacterData[]).forEach(d =>{
                 let weaponList : Array<MWeapon> = new Array<MWeapon>();
-                c.weapons.forEach(id => {
+                d.weapons.forEach(id => {
                     weaponList.push(this.weapons.get(id));
                 });
-                this.characters.set(c.id, new MCharacter(c.id,c.name, c.maxHp, c.maxEnergy,
-                     c.speed, c.defence, weaponList));
+                this.characters.set(d.id, 
+                    new MCharacter(
+                        d.id,
+                        d.name, 
+                        d.maxHp, 
+                        d.maxEnergy,
+                        d.speed, 
+                        d.defence, 
+                        weaponList
+                    ));
+            });
+        })
+
+        await this.loadDefine("enemys", (res: JsonAsset)=>{
+            (res.json as EnemyData[]).forEach(d =>{
+                this.enemys.set(d.id,
+                    new MEnemy(
+                        d.id, 
+                        d.name,
+                        d.maxHp,
+                        d.speed, 
+                        d.attack,
+                        d.defence
+                    ));
             });
         })
     }
@@ -72,6 +110,15 @@ export class DataManager extends Singleton<DataManager> {
         }
 
         return this.weapons.get(id);
+    }
+
+    getEnemyInfo(id : number) : MEnemy{
+        if(!this.enemys.has(id)){
+            console.error(`Enemy is not found : [id:${id}]!`);
+            return null;
+        }
+
+        return this.enemys.get(id);
     }
 
     loadCharacterPrefab(id : number, callback : (node:Node) => void) : Promise<void>{

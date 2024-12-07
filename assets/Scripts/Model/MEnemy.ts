@@ -1,4 +1,4 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Node, EventTarget } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('MEnemy')
@@ -14,6 +14,10 @@ export class MEnemy {
     attack : number;
     defend : number;
 
+    // Event
+    onHpChange : EventTarget = new EventTarget();
+    onDead : EventTarget = new EventTarget();
+
     constructor(id: number, name: string, maxHp: number, speed: number, attack: number, defend : number) {
         this.id = id;
         this.name = name;
@@ -23,5 +27,15 @@ export class MEnemy {
         this.attack = attack;
         this.defend = defend;
     }
+
+    hpChange(delta : number) : void {
+        console.log(`Enemy ${this.name} hp change ${delta}`);
+        this.curHp += delta;
+        this.onHpChange.emit('uiUpdate', { curHp: this.curHp, maxHp: this.maxHp });
+        if (this.curHp <= 0) {
+            this.onDead.emit('dead');
+        }
+    }
+
 }
 

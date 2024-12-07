@@ -2,6 +2,7 @@ import { _decorator, Collider2D, Color, Component, Contact2DType, EventTouch, Ga
 import { WeaponBase } from './WeaponBase';
 import { GameManager } from '../../Manager/GameManager';
 import { EnemyController } from '../../Controller/EnemyController';
+import { AttackerInfo } from '../../Common/CalculationUtil';
 const { ccclass, property } = _decorator;
 
 
@@ -29,6 +30,7 @@ export class WeaponMidori extends WeaponBase {
 
     private currentTargetNum : number;
     private currentRangeRadius : number;
+    private lockedTargets : Array<EnemyController> = [];
 
     private touching : boolean = false;
     private elapsedTime : number = 0;
@@ -64,17 +66,35 @@ export class WeaponMidori extends WeaponBase {
         this.elapsedTime = 0;
         this.currentTargetNum = this.startTargetNum;
         this.currentRangeRadius = this.startRangeRadius;
+        this.lockedTargets = [];
     }
 
     private attackChargeUpdate(deltaTime: number){
         this.elapsedTime += deltaTime;
         if(this.elapsedTime >= this.targetIncreaseInterval && this.currentTargetNum < this.maxTargetNum){
             this.currentTargetNum += 1;
-            console.log(`curTarNum : ${this.currentTargetNum}, maxTarNum : ${this.maxTargetNum}`);
             this.elapsedTime -= this.targetIncreaseInterval;
         }
         if(this.currentRangeRadius < this.maxRangeRadius){
             this.currentRangeRadius += this.rangeRadiusIncreaseRate * deltaTime;
+        }
+        const player = GameManager.instance().mCharacter.node;
+        const playerPos = player.position;
+
+        // 目标检测
+        for(let i = 0; i < GameManager.instance().emenys.length; i++){
+            
+            const enemy = GameManager.instance().emenys[i];
+            const ctrl = enemy.getComponent(EnemyController);
+            if(this.lockedTargets.indexOf(ctrl) != -1){
+                continue;
+            }
+            const enemyPos = enemy.position;
+            const distance = Math.sqrt((enemyPos.x - playerPos.x) * (enemyPos.x - playerPos.x) +
+                                       (enemyPos.y - playerPos.y) * (enemyPos.y - playerPos.y));
+            if(this.lockedTargets.length < this.currentTargetNum && distance < this.currentRangeRadius){
+                this.lockedTargets.push(ctrl);
+            }
         }
 
         this.attackDetectionDraw();
@@ -89,14 +109,27 @@ export class WeaponMidori extends WeaponBase {
 
     // 攻击检测
     protected attackDetection() {
+        const atkInfo : AttackerInfo = {
+            atk : this.info.attack,
+        }
+        for(let i = 0; i < this.lockedTargets.length; i++){
+            const target = this.lockedTargets[i];
+            target.onHit(atkInfo, (dmg : number)=>{
+                console.log(`deal damage [${dmg}] to ${target.name}`);
+            });
+        }
+
     }
 
     // 攻击判定框辅助线测试绘制
     private attackDetectionDraw(){
         let graphics = this.node.getComponent(Graphics);
         graphics.clear();
+        const player = GameManager.instance().mCharacter.node;
+        const playerPos = player.position;
+        const centerPos = v2(playerPos.x - this.node.position.x, playerPos.y - this.node.position.y);
         graphics.lineWidth = 5;
-        graphics.circle(this.skillIndicatorNode.position.x, this.skillIndicatorNode.position.y, this.currentRangeRadius);
+        graphics.circle(centerPos.x, centerPos.y, this.currentRangeRadius);
         graphics.stroke();
     }
 

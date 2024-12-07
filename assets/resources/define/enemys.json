@@ -1,0 +1,10 @@
+[
+    {
+        "id" : 1,
+        "name" : "peroro",
+        "maxHp" : 200,
+        "speed" : 100,
+        "attack" : 10,
+        "defence" : 10
+    }
+]

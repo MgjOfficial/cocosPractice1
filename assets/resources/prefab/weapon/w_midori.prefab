@@ -382,12 +382,6 @@
     "skillIndicatorNode": {
       "__id__": 8
     },
-    "startRangeRadius": 100,
-    "maxRangeRadius": 350,
-    "rangeRadiusIncreaseRate": 100,
-    "startTargetNum": 3,
-    "targetIncreaseInterval": 1,
-    "maxTargetNum": 6,
     "_id": ""
   },
   {

@@ -6,6 +6,6 @@
         "maxEnergy" : 300,
         "speed" : 300,
         "defence" : 10,
-        "weapons" : [1]
+        "weapons" : [2]
     }
 ]
