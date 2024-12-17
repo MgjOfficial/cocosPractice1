@@ -31,7 +31,7 @@ export class UIPlayerControl extends UIBase {
     tarPos : Vec2 = new Vec2(0,0);
 
     
-    public init(): void {
+    public init() {
         let mc = GameManager.instance().mCharacter;
         this.actionButtons = [];//初始化
 
@@ -41,7 +41,6 @@ export class UIPlayerControl extends UIBase {
         }
         //初始化滚轮，内置绑定玩家
         this.joyStick.init();
-
 
         let abtnsRoot = this.node.getChildByName("ActionButtons");
         let abtns = abtnsRoot.getComponentsInChildren(Button);

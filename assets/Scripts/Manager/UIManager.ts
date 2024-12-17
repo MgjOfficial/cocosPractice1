@@ -24,7 +24,7 @@ export class UIManager extends Singleton<UIManager> {
     //todo: ui管理器职能，加载ui，关闭ui，管理ui容器，提供获取某个ui的方法(通过name)
 
     //开启ui,当已经加载过ui的时候，直接提取出来，否则加载ui
-    openUI(name : string, callback : Function) : void{
+    openUI(name : string, callback : (uiComponent : any) => void)  : Promise<void>{
         //todo: 设置ui层级参数
 
         console.log("open ui : " + name);
@@ -35,17 +35,18 @@ export class UIManager extends Singleton<UIManager> {
         else{
             //let path = `prefab/ui/${name}`;
             let path = `${PATHS.UI}${name}`;
-            resources.load(path, Prefab, (err, uiPrefab)=>{
-                if(err){
-                    console.error("Failed to load UI Prefab: " + name);
-                    return null;
-                }
-                let uiNode = instantiate(uiPrefab);
-                let uiComponent = uiNode.getComponent(name);
-                this.uiMap.set(name, uiComponent as UIBase);
-                callback!(uiComponent);
+            return new Promise(()=>{
+                resources.load(path, Prefab, (err : any, uiPrefab)=>{
+                    if(err){
+                        console.error("Failed to load UI Prefab: " + name);
+                        return null;
+                    }
+                    let uiNode = instantiate(uiPrefab);
+                    let uiComponent = uiNode.getComponent(name);
+                    this.uiMap.set(name, uiComponent as UIBase);
+                    callback(uiComponent);
+                });
             });
-
         }
     }
 

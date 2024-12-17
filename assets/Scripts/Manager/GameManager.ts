@@ -1,7 +1,9 @@
-import { _decorator, Component, Game, Node } from 'cc';
+import { _decorator, Component, Game, Node, } from 'cc';
 import Singleton from '../Common/Singleton';
 import { MCharacter } from '../Model/MCharacter';
 import { DataManager } from './DataManager';
+import { StageManager } from '../Scene/StageManager';
+
 
 const { ccclass, property } = _decorator;
 
@@ -11,6 +13,8 @@ export class GameManager extends Singleton<GameManager>{
 
     public emenys : Array<Node> = new Array<Node>();
 
+    public stageManager : StageManager;
+
     //初始化玩家数据
     public initPlayerInfo(characterID: number){
         this.mCharacter = DataManager.instance().getCharacterInfo(characterID);
@@ -18,6 +22,10 @@ export class GameManager extends Singleton<GameManager>{
 
     public addEnemy(enemy:Node){
         this.emenys.push(enemy);
+    }
+
+    public setStageManager(terrain : StageManager){
+        this.stageManager = terrain;
     }
 }
 
