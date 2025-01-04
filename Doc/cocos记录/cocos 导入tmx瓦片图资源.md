@@ -4,7 +4,7 @@
 
 cocos creator 3.0以上需要使用1.3, 1.2版本的Taild
 
-cocos creator版本为3.8.3，使用1.3.2版本的Taild
+我的版本为cocos creator版本为3.8.3，使用1.3.2版本的Taild
 
 ## 建立地图存放目录
 在cocos的asset中存放一个TiledMap目录用于专门处理地形编辑
@@ -17,15 +17,7 @@ TiledMap
 ├── map(tmx和tsx资源)
 
 
-## 测试地图
-![testmap](image.png)
-
 ## 地形遮挡
 
-https://blog.csdn.net/github_38633141/article/details/110496389
-
-思路：
-1. 初始化地形坐标值
-2. 获取角色所在地图的坐标值
-3. 通过setSiblingIndex实时修改渲染位置
+https://blog.csdn.net/vanreimu/article/details/144730038
 

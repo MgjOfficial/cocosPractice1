@@ -24,8 +24,8 @@ export class GameManager extends Singleton<GameManager>{
         this.emenys.push(enemy);
     }
 
-    public setStageManager(terrain : StageManager){
-        this.stageManager = terrain;
+    public setStageManager(stageManager : StageManager){
+        this.stageManager = stageManager;
     }
 }
 

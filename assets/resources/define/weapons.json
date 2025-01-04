@@ -12,6 +12,6 @@
         "name" : "w_midori",
         "attack" : 20,
         "cooldown" : 1,
-        "rangeArray" : [100,400,80,3,0.5,6]
+        "rangeArray" : [200,5]
     }
 ]

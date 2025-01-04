@@ -1,9 +1,14 @@
-import { _decorator, Animation, animation, Camera, Component, debug, director, EventKeyboard, EventMouse, Input, input, KeyCode, math, Node, PostSettingsInfo, Prefab, Quat, Screen, v3, Vec2, Vec3 } from 'cc';
+import { _decorator, Animation, animation, Camera, Component, debug, director, EventKeyboard, EventMouse, Game, Input, input, KeyCode, math, Node, PostSettingsInfo, Prefab, Quat, Screen, v3, Vec2, Vec3 } from 'cc';
 import { MCharacter } from '../Model/MCharacter';
+import { GameManager } from '../Manager/GameManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('PlayerController')
 export class PlayerController extends Component {
+
+    @property(Node)
+    center : Node;
+
     private info : MCharacter;
     private anim : Animation;
 
@@ -11,12 +16,13 @@ export class PlayerController extends Component {
     private isMoving : boolean = false;
     private lastDirForAnim : number = 1;
 
-    public init(info : MCharacter){
+    public init(info : MCharacter){ 
         this.info = info;
     }
 
     protected onLoad(): void {
         this.anim = this.node.getComponentInChildren(Animation);
+        this.center = this.node.getChildByName("center");
     }
 
     protected update(deltaTime: number) {
@@ -92,8 +98,7 @@ export class PlayerController extends Component {
         else{
             this.lastDirForAnim = (this.curDirection.x < 0)? 2 : 3;
         }
-        
-
+    
         this.curDirection = direction;
         this.isMoving = true;
     }
@@ -103,8 +108,11 @@ export class PlayerController extends Component {
      */
 
     public stopMove():void{
-
         this.isMoving = false;
+    }
+
+    public getCenterPosition() : Vec3{
+        return this.center.worldPosition;
     }
 
 

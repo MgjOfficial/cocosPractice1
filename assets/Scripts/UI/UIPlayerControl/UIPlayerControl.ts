@@ -33,7 +33,13 @@ export class UIPlayerControl extends UIBase {
     
     public init() {
         let mc = GameManager.instance().mCharacter;
+        let actionBtnsRoot = this.node.getChildByName("ActionButtons");
+        let actionBtns = actionBtnsRoot.getComponentsInChildren(Button);
+
         this.actionButtons = [];//初始化
+        actionBtns.forEach(btn => {
+            this.actionButtons.push(btn);
+        })
 
         this.joyStick = this.joyStickRoot.getComponent(JoyStick);
         if(!this.joyStick){
@@ -42,18 +48,17 @@ export class UIPlayerControl extends UIBase {
         //初始化滚轮，内置绑定玩家
         this.joyStick.init();
 
-        let abtnsRoot = this.node.getChildByName("ActionButtons");
-        let abtns = abtnsRoot.getComponentsInChildren(Button);
-
         let weps = mc.weapons;
-        abtns.forEach(btn => {
-            let wpComponent = weps[0].node.getComponent(WeaponBase);
-            this.actionButtons.push(btn);
-            let btnAtk = btn.getComponent(BtnAttack);
+        let wpComponent = weps[0].node.getComponent(WeaponBase);
+        
+        let normalAttack = this.actionButtons[0].getComponent(BtnAttack);
+        normalAttack?.init(wpComponent, wpComponent.onNormalTouchStart, wpComponent.onNormalTouchMove,
+            wpComponent.onNormalTouchEnd, wpComponent.onNormalTouchCancel);
 
-            btnAtk?.init(wpComponent, wpComponent.onTouchStart, wpComponent.onTouchMove,
-                wpComponent.onTouchEnd, wpComponent.onTouchCancel);
-        });
+        let ultimateAttack = this.actionButtons[1].getComponent(BtnAttack);
+
+        ultimateAttack?.init(wpComponent, wpComponent.onUltimateTouchStart, wpComponent.onUltimateTouchMove,
+            wpComponent.onUltimateTouchEnd, wpComponent.onUltimateTouchCancel);
     }
 
 

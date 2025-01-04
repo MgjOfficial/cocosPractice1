@@ -4,7 +4,7 @@
         "name" : "momoi",
         "maxHp" : 550,
         "maxEnergy" : 300,
-        "speed" : 300,
+        "speed" : 80,
         "defence" : 10,
         "weapons" : [2]
     }

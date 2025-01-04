@@ -28,17 +28,15 @@ export class WeaponMomoi extends WeaponBase {
         this.fanRadius = this.info.rangeArray[0];
         this.startAngle = this.info.rangeArray[1];
         this.endAngle = this.info.rangeArray[2];
-
     }
 
-    onTouchStart(e : EventTouch){
+    onUltimateTouchStart(e : EventTouch){
         //this 指的是传入on的target，以当前对象传入才可以正确调用this.xxx
         this.skillIndicatorNode.active = true;
         this.skillIndicatorNode.setWorldPosition(GameManager.instance().mCharacter.node.worldPosition);
         this.touchStartPos = e.getUILocation();
-        //console.log(`weapon momoi on touch start, pos ${this.touchStartPos}`);
     }
-    onTouchMove(e : EventTouch){
+    onUltimateTouchMove(e : EventTouch){
         this.skillIndicatorNode.setWorldPosition(GameManager.instance().mCharacter.node.worldPosition);
 
         let tarPos = e.getUILocation();
@@ -47,14 +45,13 @@ export class WeaponMomoi extends WeaponBase {
         var dir = v2(dx,-dy); // ui和实际朝向在y轴上相反
         var angle = dir.signAngle(v2(1,0));
         var degree = angle / Math.PI * 180;
-        //console.log(`deg : ${degree}`)
         this.skillIndicatorNode.angle = degree;
 
     }
-    onTouchEnd(e : EventTouch){
+    onUltimateTouchEnd(e : EventTouch){
         this.onTouchEndMerge(e);
     }
-    onTouchCancel(e : EventTouch){
+    onUltimateTouchCancel(e : EventTouch){
         this.onTouchEndMerge(e);
     }
 
@@ -66,32 +63,29 @@ export class WeaponMomoi extends WeaponBase {
 
         //this.attackDetectionDraw();
         // todo:计算最后的角度，调整角度
-        this.attackDetection(targetDirection);
+        this.ultimateDetection(targetDirection);
     }
-
    
-    attackDetection(targetDirection : Vec2): void {
+    ultimateDetection(targetDirection : Vec2): void {
         let count = 0;
-        const faceAngle = misc.radiansToDegrees(Math.atan2(targetDirection.y, targetDirection.x));
-        const atkInfo : AttackerInfo = {
+        let faceAngle = misc.radiansToDegrees(Math.atan2(targetDirection.y, targetDirection.x));
+        let atkInfo : AttackerInfo = {
             atk : this.info.attack,
         }
         this.attackDetectionDraw(targetDirection);
         //console.log(`face angle [${faceAngle}], atk angle range[${faceAngle + this.endAngle} , ${faceAngle + this.startAngle}]`);
         this.schedule(function(){
             console.log(`atk detect : [round ${count++}]`);
-            const enemys = GameManager.instance().emenys;
-            const player = GameManager.instance().mCharacter.node;
-            const playerPos = player.position;
-
+            let enemys = GameManager.instance().emenys;
+            let centerPos = this.owner.getCenter();
             enemys.forEach(e => {
-                const enemyPos = e.position;
-                const distance = Math.sqrt((enemyPos.x - playerPos.x)*(enemyPos.x - playerPos.x) +
-                    (enemyPos.y - playerPos.y)*(enemyPos.y - playerPos.y));
+                let enemyPos = e.position;
+                let distance = Math.sqrt((enemyPos.x - centerPos.x)*(enemyPos.x - centerPos.x) +
+                    (enemyPos.y - centerPos.y)*(enemyPos.y - centerPos.y));
                 if(distance > this.fanRadius){
                     return;
                 }
-                const direction = v2(enemyPos.x - playerPos.x, enemyPos.y - playerPos.y).normalize();
+                let direction = v2(enemyPos.x - centerPos.x, enemyPos.y - centerPos.y).normalize();
                 let radian = Math.atan2(direction.y, direction.x); // 计算弧度
                 let angle = misc.radiansToDegrees(radian);
                 if(angle <= faceAngle + this.endAngle && angle >= faceAngle + this.startAngle){
@@ -112,9 +106,7 @@ export class WeaponMomoi extends WeaponBase {
 
     // 攻击判定框辅助线测试绘制
     attackDetectionDraw(targetDirection : Vec2){
-
-        let playerNode = GameManager.instance().mCharacter.node;
-        let centerPos = v2(playerNode.position.x - this.node.position.x,playerNode.position.y - this.node.position.y);
+        let centerPos = this.owner.getCenterPosition();
         const graphics = this.node.getComponent(Graphics);
 
         // 初始化一下Graphics的绘制参数
@@ -146,9 +138,6 @@ export class WeaponMomoi extends WeaponBase {
     private attackDetectionDrawClean(){
         this.node.getComponent(Graphics).clear();
     }
-
-    
-
     
 }
 

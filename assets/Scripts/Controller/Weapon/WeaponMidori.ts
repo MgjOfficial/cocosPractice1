@@ -14,101 +14,105 @@ export class WeaponMidori extends WeaponBase {
 
     /* 
      * info.rangeArray 攻击范围与目标相关参数
-     * [0] : 攻击范围起始半径 default = 100
-     * [1] : 攻击范围最大半径 default = 400
-     * [2] : 攻击范围增长速度 default = 20
-     * [3] : 初始目标数 default = 3
-     * [4] : 目标数增长速度(间隙) default = 0.5
-     * [5] : 最大目标数 default = 6
+     * [0] : 攻击范围半径 default = 300
+     * [1] : 最大目标数 default = 5
      */
-    startRangeRadius : number;
-    maxRangeRadius : number;
-    rangeRadiusIncreaseRate : number;
-    startTargetNum : number;
-    targetIncreaseInterval : number;
+    rangeRadius : number;
     maxTargetNum : number;
-
-    private currentTargetNum : number;
-    private currentRangeRadius : number;
     private lockedTargets : Array<EnemyController> = [];
 
     private touching : boolean = false;
-    private elapsedTime : number = 0;
-
-    protected start(): void {
-        // 此处this.skill_area与事件触发的this.skill_area不相同
-    }
-
     protected update(deltaTime: number): void {
         if(this.touching){
-            this.attackChargeUpdate(deltaTime);
+            this.updateUltimateCharge(deltaTime);
         }
     }
 
     protected analyzeRangeArray(): void {
     
-        if(this.info.rangeArray.length != 6){
+        if(this.info.rangeArray.length != 2){
             console.error("rangeArray length error");
             return;
         }
         // 解析数组并赋值
-        this.startRangeRadius = this.info.rangeArray[0];
-        this.maxRangeRadius = this.info.rangeArray[1];
-        this.rangeRadiusIncreaseRate = this.info.rangeArray[2];
-        this.startTargetNum = this.info.rangeArray[3];
-        this.targetIncreaseInterval = this.info.rangeArray[4];
-        this.maxTargetNum = this.info.rangeArray[5];
+        this.rangeRadius = this.info.rangeArray[0];
+        this.maxTargetNum = this.info.rangeArray[1];
+
+        console.log(`rangeRadius: ${this.rangeRadius}`);
+        console.log(`maxTargetNum: ${this.maxTargetNum}`);
     }
 
-    // 开始充能/蓄力攻击
-    private startAttackCharge(){
+    
+
+
+    // Normal attack
+    onNormalTouchStart(e : EventTouch){}
+    onNormalTouchMove(e : EventTouch){}
+    onNormalTouchEnd(e : EventTouch){}
+    onNormalTouchCancel(e : EventTouch){}
+
+
+    
+
+    // Ultimate attack
+
+    onUltimateTouchStart(e : EventTouch){
+        //this 指的是传入on的target，以当前对象传入才可以正确调用this.xxx
+        this.skillIndicatorNode.active = true;
+        this.skillIndicatorNode.setWorldPosition(this.owner.getCenterPosition())
+        this.startUltimateCharge();
+    }
+    onUltimateTouchMove(e : EventTouch){
+    }
+    onUltimateTouchEnd(e : EventTouch){
+        this.onTouchEndMerge(e);
+    }
+    onUltimateTouchCancel(e : EventTouch){
+        this.onTouchEndMerge(e);
+    }
+
+    onTouchEndMerge(e:EventTouch){
+        this.skillIndicatorNode.active = false;
+
+        this.endUltimateCharge();
+    }
+
+    // 开始按住终极技能按钮
+    private startUltimateCharge(){
         this.touching = true;
-        this.elapsedTime = 0;
-        this.currentTargetNum = this.startTargetNum;
-        this.currentRangeRadius = this.startRangeRadius;
         this.lockedTargets = [];
     }
 
-    private attackChargeUpdate(deltaTime: number){
-        this.elapsedTime += deltaTime;
-        if(this.elapsedTime >= this.targetIncreaseInterval && this.currentTargetNum < this.maxTargetNum){
-            this.currentTargetNum += 1;
-            this.elapsedTime -= this.targetIncreaseInterval;
-        }
-        if(this.currentRangeRadius < this.maxRangeRadius){
-            this.currentRangeRadius += this.rangeRadiusIncreaseRate * deltaTime;
-        }
-        const player = GameManager.instance().mCharacter.node;
-        const playerPos = player.position;
+    private updateUltimateCharge(deltaTime: number){
+        const centerPos = this.owner.getCenterPosition();
 
         // 目标检测
-        for(let i = 0; i < GameManager.instance().emenys.length; i++){
-            
-            const enemy = GameManager.instance().emenys[i];
-            const ctrl = enemy.getComponent(EnemyController);
-            if(this.lockedTargets.indexOf(ctrl) != -1){
+        for(let i = 0; i < GameManager.instance().emenys.length; i++){   
+            let enemy = GameManager.instance().emenys[i];
+            let eCtrl = enemy.getComponent(EnemyController);
+            if(this.lockedTargets.indexOf(eCtrl) != -1){
                 continue;
             }
-            const enemyPos = enemy.position;
-            const distance = Math.sqrt((enemyPos.x - playerPos.x) * (enemyPos.x - playerPos.x) +
-                                       (enemyPos.y - playerPos.y) * (enemyPos.y - playerPos.y));
-            if(this.lockedTargets.length < this.currentTargetNum && distance < this.currentRangeRadius){
-                this.lockedTargets.push(ctrl);
+            const enemyPos = enemy.worldPosition;
+            let distance = Math.sqrt((enemyPos.x - centerPos.x) * (enemyPos.x - centerPos.x) +
+                                       (enemyPos.y - centerPos.y) * (enemyPos.y - centerPos.y));
+            if(this.lockedTargets.length < this.maxTargetNum && distance < this.rangeRadius){
+                this.lockedTargets.push(eCtrl);
             }
         }
 
-        this.attackDetectionDraw();
+        //this.attackDetectionDraw();
     }
 
-    // 结束充能/蓄力攻击
-    private endAttackCharge(){
+    // 松开终极技能按钮
+    private endUltimateCharge(){
         this.touching = false;
-        this.attackDetection();
+        this.ultimateDetection();
         this.node.getComponent(Graphics).clear();
     }
 
-    // 攻击检测
-    protected attackDetection() {
+    // 终极技能攻击检测
+    protected ultimateDetection() {
         const atkInfo : AttackerInfo = {
             atk : this.info.attack,
         }
@@ -119,39 +123,6 @@ export class WeaponMidori extends WeaponBase {
             });
         }
 
-    }
-
-    // 攻击判定框辅助线测试绘制
-    private attackDetectionDraw(){
-        let graphics = this.node.getComponent(Graphics);
-        graphics.clear();
-        const player = GameManager.instance().mCharacter.node;
-        const playerPos = player.position;
-        const centerPos = v2(playerPos.x - this.node.position.x, playerPos.y - this.node.position.y);
-        graphics.lineWidth = 5;
-        graphics.circle(centerPos.x, centerPos.y, this.currentRangeRadius);
-        graphics.stroke();
-    }
-
-    onTouchStart(e : EventTouch){
-        //this 指的是传入on的target，以当前对象传入才可以正确调用this.xxx
-        this.skillIndicatorNode.active = true;
-        this.skillIndicatorNode.setWorldPosition(GameManager.instance().mCharacter.node.worldPosition);
-        this.startAttackCharge();
-    }
-    onTouchMove(e : EventTouch){
-    }
-    onTouchEnd(e : EventTouch){
-        this.onTouchEndMerge(e);
-    }
-    onTouchCancel(e : EventTouch){
-        this.onTouchEndMerge(e);
-    }
-
-    onTouchEndMerge(e:EventTouch){
-        this.skillIndicatorNode.active = false;
-
-        this.endAttackCharge();
     }
 }
 

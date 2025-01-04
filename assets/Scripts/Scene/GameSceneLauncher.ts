@@ -56,7 +56,7 @@ export class GameSceneLauncher extends Component {
                 weaponNode.active = true;
                 wp.node = weaponNode; // 绑定节点
                 let wc = weaponNode.getComponent(WeaponBase);
-                wc.setOwner(chara.node);
+                wc.setOwner(chara.node.getComponent(PlayerController));
                 console.log(`load weapon [${wp.name}] complete`);
             })
         }
